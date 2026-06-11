@@ -4,7 +4,7 @@ An intelligent full-stack mobile application that acts as the "Shazam for video 
 
 ---
 
-## 🚀 Features
+##  Features
 
 - **Sequential Frame Analysis:** Captures 4 high-fidelity snapshots spaced 350ms apart to model scene changes and tracking shots accurately.
 - **Structured AI Interpretation:** Leverages Gemini 2.5 Flash to analyze set design, actors, wardrobe, UI layout, and visual cues, outputting clean structured JSON.
@@ -12,7 +12,7 @@ An intelligent full-stack mobile application that acts as the "Shazam for video 
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **Framework:** Expo (React Native)
@@ -26,7 +26,7 @@ An intelligent full-stack mobile application that acts as the "Shazam for video 
 
 ---
 
-## 📦 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 - **Node.js** (v18+)
