@@ -30,24 +30,24 @@ export default function App() {
       
       // Capture 4 distinct frames spaced 350ms apart for optimal scene tracking
       for (let i = 0; i < 4; i++) {
-  const snapshot = await cameraRef.current.takeSnapshot({ 
-    quality: 80, 
-    skipMetadata: true 
-  });
-  
-  // FIX: Ensure the path always has the 'file://' prefix required by Expo FileSystem
-  const cleanPath = snapshot.path.startsWith('file://') 
-    ? snapshot.path 
-    : `file://${snapshot.path}`;
-  
-  // Convert the local absolute file path into a text-friendly Base64 data package
-  const base64Data = await FileSystem.readAsStringAsync(cleanPath, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
-  
-  collectedFrames.push(base64Data);
-  if (i < 3) await new Promise((resolve) => setTimeout(resolve, 350));
-}
+        const snapshot = await cameraRef.current.takeSnapshot({ 
+          quality: 80, 
+          skipMetadata: true 
+        });
+        
+        // FIX: Ensure the path always has the 'file://' prefix required by Expo FileSystem
+        const cleanPath = snapshot.path.startsWith('file://') 
+          ? snapshot.path 
+          : `file://${snapshot.path}`;
+        
+        // Convert the local absolute file path into a text-friendly Base64 data package
+        const base64Data = await FileSystem.readAsStringAsync(cleanPath, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+        
+        collectedFrames.push(base64Data);
+        if (i < 3) await new Promise((resolve) => setTimeout(resolve, 350));
+      }
 
       // Relay payloads over Wi-Fi network to Node backend
       const analysisData = await sendFramesToBackend(collectedFrames);
@@ -88,19 +88,19 @@ export default function App() {
 
       <View style={styles.controlPanel}>
         <TouchableOpacity 
-  onPress={runIdentification} 
-  disabled={isIdentifying}
-  activeOpacity={0.7}
-  style={styles.logoButtonContainer}
->
-  <Image 
-    source={ClipCamLogo} 
-    style={[
-      styles.logoButtonImage, 
-      isScanning && styles.logoButtonScanning // Apply a dimming/loading look when processing
-    ]} 
-  />
-</TouchableOpacity>
+          onPress={runIdentification} 
+          disabled={isIdentifying}
+          activeOpacity={0.7}
+          style={styles.logoButtonContainer}
+        >
+          <Image 
+            source={ClipCamLogo} 
+            style={[
+              styles.logoButtonImage, 
+              isIdentifying && styles.logoButtonScanning // Fixed: Swapped to isIdentifying
+            ]} 
+          />
+        </TouchableOpacity>
 
         {result && (
           <ScrollView style={styles.resultsCard}>
@@ -137,16 +137,16 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: 5,
-    elevation: 8, // Adds a sleek drop shadow on Android behind the icon
+    elevation: 8,
   },
   logoButtonImage: {
-    width: 140,  // Clean, high-impact square proportions
+    width: 140,  
     height: 140,
-    borderRadius: 28, // Matches the smooth squircle curvature of your logo file
+    borderRadius: 28, 
     resizeMode: 'contain',
   },
   logoButtonScanning: {
-    opacity: 0.5, // Visual feedback to show the app is hard at work analyzing frames
+    opacity: 0.5, 
   },
   disabledButton: { backgroundColor: '#1F2937' },
   buttonText: { color: '#0B0F19', fontWeight: '800', letterSpacing: 1 },
