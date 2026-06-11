@@ -1,6 +1,6 @@
 # ClipCam 
 
-Shazam, but for videos. Built with React Native, Expo, and Gemini 2.5 Flash.
+Shazam, but for videos. Built with React Native, Expo, and Gemini 2.5 Flash API.
 
 ## Tech Stack
 - **Frontend:** React Native (Expo)
