@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
 // Initialize the Google Gen AI SDK. It automatically utilizes process.env.GEMINI_API_KEY
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 /**
  * 1. Define the Structured Output Schema
