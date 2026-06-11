@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, SafeAreaView, ScrollView, Image} from 'react-native';
 import { Camera, useCameraDevice } from 'react-native-vision-camera';
 import * as FileSystem from 'expo-file-system';
 import sendFramesToBackend from './src/services/api';
+import ClipCamLogo from './assets/icon.png';
 
 export default function App() {
   const device = useCameraDevice('back');
@@ -87,12 +88,19 @@ export default function App() {
 
       <View style={styles.controlPanel}>
         <TouchableOpacity 
-          style={[styles.shazamButton, isIdentifying && styles.disabledButton]} 
-          onPress={runIdentification}
-          disabled={isIdentifying}
-        >
-          <Text style={styles.buttonText}>{isIdentifying ? "SCANNING" : "CLIPCAM"}</Text>
-        </TouchableOpacity>
+  onPress={runIdentification} 
+  disabled={isIdentifying}
+  activeOpacity={0.7}
+  style={styles.logoButtonContainer}
+>
+  <Image 
+    source={ClipCamLogo} 
+    style={[
+      styles.logoButtonImage, 
+      isScanning && styles.logoButtonScanning // Apply a dimming/loading look when processing
+    ]} 
+  />
+</TouchableOpacity>
 
         {result && (
           <ScrollView style={styles.resultsCard}>
@@ -122,6 +130,24 @@ const styles = StyleSheet.create({
   overlayText: { color: '#00E5FF', marginTop: 10, fontSize: 16, fontWeight: '600' },
   controlPanel: { flex: 1, alignItems: 'center', padding: 20, justifyContent: 'space-between' },
   shazamButton: { width: 110, height: 110, borderRadius: 55, backgroundColor: '#00E5FF', justifyContent: 'center', alignItems: 'center', shadowColor: '#00E5FF', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 15, marginTop: 15 },
+  logoButtonContainer: {
+    alignSelf: 'center',
+    marginVertical: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 5,
+    elevation: 8, // Adds a sleek drop shadow on Android behind the icon
+  },
+  logoButtonImage: {
+    width: 140,  // Clean, high-impact square proportions
+    height: 140,
+    borderRadius: 28, // Matches the smooth squircle curvature of your logo file
+    resizeMode: 'contain',
+  },
+  logoButtonScanning: {
+    opacity: 0.5, // Visual feedback to show the app is hard at work analyzing frames
+  },
   disabledButton: { backgroundColor: '#1F2937' },
   buttonText: { color: '#0B0F19', fontWeight: '800', letterSpacing: 1 },
   resultsCard: { width: '100%', backgroundColor: '#1E293B', borderRadius: 12, padding: 16, marginTop: 15 },
