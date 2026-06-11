@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, SafeAreaView, ScrollView } from 'react-native';
 import { Camera, useCameraDevice } from 'react-native-vision-camera';
 import * as FileSystem from 'expo-file-system';
-import { sendFramesToBackend } from './src/services/api';
+import sendFramesToBackend from './src/services/api';
 
 export default function App() {
   const device = useCameraDevice('back');

@@ -1,5 +1,5 @@
 // Android emulators look at this specific IP address to route traffic back to your laptop
-const LOCAL_BACKEND_URL = 'http://10.0.2.2:5000/api/identify';
+const LOCAL_BACKEND_URL = 'http://10.0.2.2:5001/api/identify';
 
 /**
  * Transmits collected camera snapshots to the local Node.js backend analysis engine.
