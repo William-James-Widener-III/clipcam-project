@@ -29,19 +29,24 @@ export default function App() {
       
       // Capture 4 distinct frames spaced 350ms apart for optimal scene tracking
       for (let i = 0; i < 4; i++) {
-        const snapshot = await cameraRef.current.takeSnapshot({ 
-          quality: 80, 
-          skipMetadata: true 
-        });
-        
-        // Convert the local absolute file path into a text-friendly Base64 data package
-        const base64Data = await FileSystem.readAsStringAsync(snapshot.path, {
-          encoding: FileSystem.EncodingType.Base64,
-        });
-        
-        collectedFrames.push(base64Data);
-        if (i < 3) await new Promise((resolve) => setTimeout(resolve, 350));
-      }
+  const snapshot = await cameraRef.current.takeSnapshot({ 
+    quality: 80, 
+    skipMetadata: true 
+  });
+  
+  // FIX: Ensure the path always has the 'file://' prefix required by Expo FileSystem
+  const cleanPath = snapshot.path.startsWith('file://') 
+    ? snapshot.path 
+    : `file://${snapshot.path}`;
+  
+  // Convert the local absolute file path into a text-friendly Base64 data package
+  const base64Data = await FileSystem.readAsStringAsync(cleanPath, {
+    encoding: FileSystem.EncodingType.Base64,
+  });
+  
+  collectedFrames.push(base64Data);
+  if (i < 3) await new Promise((resolve) => setTimeout(resolve, 350));
+}
 
       // Relay payloads over Wi-Fi network to Node backend
       const analysisData = await sendFramesToBackend(collectedFrames);
