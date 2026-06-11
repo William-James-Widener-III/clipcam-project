@@ -4,7 +4,7 @@ An intelligent full-stack mobile application that acts as the "Shazam for video 
 
 ---
 
-## 🚀 Features
+##  Features
 
 - **Sequential Frame Analysis:** Captures 4 high-fidelity snapshots spaced 350ms apart to model scene changes and tracking shots accurately.
 - **Structured AI Interpretation:** Leverages Gemini 2.5 Flash to analyze set design, actors, wardrobe, UI layout, and visual cues, outputting clean structured JSON.
@@ -12,7 +12,7 @@ An intelligent full-stack mobile application that acts as the "Shazam for video 
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **Framework:** Expo (React Native)
@@ -26,7 +26,7 @@ An intelligent full-stack mobile application that acts as the "Shazam for video 
 
 ---
 
-## 📦 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 - **Node.js** (v18+)
@@ -36,8 +36,18 @@ An intelligent full-stack mobile application that acts as the "Shazam for video 
 
 ---
 
-### Backend Configuration
+## How it Works
+Capture Loop: When the CLIPCAM button is pushed, the app takes 4 sequential frame snapshots using the native hardware camera layer.
 
-1. Navigate to the backend directory:
-   ```bash
-   cd clipcam-backend
+Data Packaging: The files are written locally to the app cache, verified via file:// scheme URIs, and converted cleanly to Base64 packages.
+
+Network Bridge: The payloads are dispatched as a unified POST block across the internal loopback adapter to the Node.js Express router.
+
+LLM Analysis: The server transforms the payloads into raw image components and issues a structured, typed schema completion request to Gemini 2.5 Flash.
+
+UI Update: The application parses the structured JSON return values to display high-confidence match data, episode context, visual cues, and scenic breakdowns directly on the client view.
+
+---
+
+## License
+This project is open source and available under the MIT License.
